@@ -33,7 +33,7 @@ def commands(message):
                     bot.send_message(message.chat.id,end_message)
         
     else:
-        bot.send_message(message.from_user.id, "не вверный ввод данных")
+        bot.send_message(message.from_user.id, "неверный ввод данных")
 
 
 bot.polling()
