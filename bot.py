@@ -19,6 +19,7 @@ def commands(message):
             else:
                 bot.send_message(message.chat.id,end_message)
     elif "xlsx" in message.text:
+        start = time.time() ## точка отсчета времени
         sku_list = load_data(message.text)
         for sku in sku_list:
       #      sku = str(sku)
@@ -28,9 +29,10 @@ def commands(message):
                 if '( ***** )' in end_message:
                     pass
                 else:
-                    time.sleep(1)
-
+                    time.sleep(0.7)
                     bot.send_message(message.chat.id,end_message)
+            end = time.time() 
+            print(end)
         
     else:
         bot.send_message(message.from_user.id, "неверный ввод данных")
