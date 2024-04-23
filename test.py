@@ -21,18 +21,19 @@ def get_source_html(sku):
     driver.maximize_window()
     url =   f"https://www.wildberries.ru/catalog/{sku}/feedbacks"
     stars = ['star1','star2','star3','star4','star5']
-    true_stars =['( * ) ','( ** )','( *** )','( **** )','( ***** )'] 
+    true_stars = ['( * ) ','( ** )','( *** )','( **** )','( ***** )'] 
     driver.get(url)
-    time.sleep(3)
+    time.sleep(1)
 
     initial_html = driver.page_source
     initial_soup = BeautifulSoup(initial_html, 'html.parser')
     nameof = initial_soup.find('a',class_='product-line__name').text
     score = initial_soup.find('span', class_='address-rate-mini').text
-    initial_quotes = initial_soup.find_all('li', class_='comments__item')
+    #initial_quotes = initial_soup.find_all('li', class_='comments__item')
     counter = initial_soup.find('span', class_='product-feedbacks__count')
     driver.find_element(By.LINK_TEXT, "Оценке").click()
     driver.find_element(By.LINK_TEXT, "Оценке").click()
+    time.sleep(2)
     prev_height = -1
     block_list = []
     toremuve="\xa0"
@@ -54,9 +55,14 @@ def get_source_html(sku):
         scroll_html = driver.page_source
         scroll_soup = BeautifulSoup(scroll_html, 'html.parser')
         scroll_quotes  = scroll_soup.find_all('li', class_='comments__item')
-       
+        for i in scroll_quotes:
+            print(type(i))
+            if 'star5' in str(i):
+                break
         new_height = driver.execute_script("return document.body.scrollHeight")
+
         if new_height == prev_height:
+     
             break
         prev_height = new_height
         scroll_count += 1
@@ -83,3 +89,5 @@ def get_source_html(sku):
            
     return summer
 
+
+get_source_html('29360157')
